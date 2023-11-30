@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 // allow access
 const corsOptions = {
-  origin: ["*", "https://kalijaga-screen.netlify.app", "http://localhost:5173", "http://localhost:5174"],
+  origin: ["https://kalijaga-screen.netlify.app", "http://localhost:5173", "http://localhost:5174"],
   credentials: true,
 };
 

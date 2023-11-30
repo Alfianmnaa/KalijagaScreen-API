@@ -13,17 +13,11 @@ const favoriteRoutes = require("./src/routes/favorite");
 dotenv.config();
 app.use(bodyParser.json());
 app.use(express.json());
-
 // allow access
 const corsOptions = {
   origin: function (origin, callback) {
-    const allowedOrigins = ["https://kalijaga-screen.netlify.app", "https://breakable-undershirt-cod.cyclic.app", "http://localhost:5173", "http://localhost:5174"];
-
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
+    // Setiap origin diperbolehkan setelah hosting
+    callback(null, true);
   },
   credentials: true,
 };
@@ -43,7 +37,6 @@ app.use("/watch", watchRoutes);
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/favorite", favoriteRoutes);
-
 // start server
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

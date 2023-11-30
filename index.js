@@ -13,9 +13,18 @@ const favoriteRoutes = require("./src/routes/favorite");
 dotenv.config();
 app.use(bodyParser.json());
 app.use(express.json());
+
 // allow access
 const corsOptions = {
-  origin: ["https://kalijaga-screen.netlify.app", "https://breakable-undershirt-cod.cyclic.app", "http://localhost:5173", "http://localhost:5174"],
+  origin: function (origin, callback) {
+    const allowedOrigins = ["https://kalijaga-screen.netlify.app", "https://breakable-undershirt-cod.cyclic.app", "http://localhost:5173", "http://localhost:5174"];
+
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 };
 
@@ -25,10 +34,7 @@ app.use(cookieParser());
 
 mongoose.set("strictQuery", false);
 mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGO_URL)
   .then(console.log("connected to mongoose"))
   .catch((err) => console.log(err));
 
@@ -37,6 +43,7 @@ app.use("/watch", watchRoutes);
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/favorite", favoriteRoutes);
+
 // start server
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

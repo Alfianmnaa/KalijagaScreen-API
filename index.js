@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 // allow access
 const corsOptions = {
-  origin: ["https://kalijaga-screen.netlify.app/", "https://breakable-undershirt-cod.cyclic.app", "http://localhost:5173", "http://localhost:5174"],
+  origin: ["https://kalijaga-screen.netlify.app", "https://breakable-undershirt-cod.cyclic.app", "http://localhost:5173", "http://localhost:5174"],
   credentials: true,
 };
 
@@ -27,9 +27,16 @@ app.use(cookieParser());
 mongoose.set("strictQuery", false);
 // Connect mongodb
 mongoose
-  .connect(process.env.MONGO_URL)
-  .then(console.log("Connected to mongoose"))
-  .catch((err) => console.log(err));
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Connected to mongoose");
+  })
+  .catch((err) => {
+    console.error("Error connecting to mongoose:", err);
+  });
 
 // menggunakan grouping
 app.use("/watch", watchRoutes);

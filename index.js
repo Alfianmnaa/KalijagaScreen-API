@@ -23,20 +23,14 @@ app.use(cors(corsOptions));
 
 app.use(cookieParser());
 
-// Handle Error mongodb
 mongoose.set("strictQuery", false);
-// Connect mongodb
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => {
-    console.log("Connected to mongoose");
-  })
-  .catch((err) => {
-    console.error("Error connecting to mongoose:", err);
-  });
+  .then(console.log("connected to mongoose"))
+  .catch((err) => console.log(err));
 
 // menggunakan grouping
 app.use("/watch", watchRoutes);

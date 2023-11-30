@@ -15,10 +15,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 // allow access
 const corsOptions = {
-  origin: function (origin, callback) {
-    // Setiap origin diperbolehkan setelah hosting
-    callback(null, true);
-  },
+  origin: ["https://kalijaga-screen.netlify.app", "https://breakable-undershirt-cod.cyclic.app", "http://localhost:5173", "http://localhost:5174"],
   credentials: true,
 };
 

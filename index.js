@@ -34,6 +34,17 @@ app.use("/watch", watchRoutes);
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/favorite", favoriteRoutes);
+
+// testing
+
+app.get("/test", (req, res) => {
+  try {
+    res.send("hallo");
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 // start server
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

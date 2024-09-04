@@ -20,14 +20,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
 app.use(cookieParser());
-
-mongoose.set("strictQuery", false);
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then(console.log("connected to mongoose"))
-  .catch((err) => console.log(err));
 
 // menggunakan grouping
 app.use("/watch", watchRoutes);
@@ -35,9 +28,15 @@ app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/favorite", favoriteRoutes);
 
+mongoose.set("strictQuery", false);
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(console.log("Berhasil terhubung ke glucost mongo"))
+  .catch((err) => console.log(err));
+
 // testing
 
-app.get("/test", (req, res) => {
+app.get("/", (req, res) => {
   try {
     res.send("hallo");
   } catch (error) {
